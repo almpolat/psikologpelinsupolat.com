@@ -3,7 +3,7 @@ const currentLang = { value: 'tr' };
 
 function setLanguage(lang) {
     currentLang.value = lang;
-
+    
     // Update all translatable elements (text content)
     document.querySelectorAll('[data-tr][data-fr][data-en]').forEach(el => {
         const text = el.getAttribute(`data-${lang}`);
@@ -81,12 +81,12 @@ const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const id = entry.target.id;
-
+            
             // Update dots
             dots.forEach(dot => {
                 dot.classList.toggle('active', dot.dataset.section === id);
             });
-
+            
             // Update nav links
             navLinks.forEach(link => {
                 link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
@@ -152,15 +152,15 @@ let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const nav = document.getElementById('main-nav');
     const scrollPos = window.scrollY;
-
+    
     if (scrollPos > 100) {
         nav.style.padding = '12px 40px';
-        nav.style.background = 'rgba(245, 240, 232, 0.95)';
+        nav.style.background = 'rgba(10, 10, 15, 0.95)';
     } else {
         nav.style.padding = '18px 40px';
-        nav.style.background = 'rgba(245, 240, 232, 0.88)';
+        nav.style.background = 'rgba(10, 10, 15, 0.85)';
     }
-
+    
     lastScroll = scrollPos;
 });
 
@@ -213,7 +213,7 @@ document.addEventListener('keydown', (e) => {
 // Form submission — sends to polatpelinsu@gmail.com via FormSubmit.co
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-
+    
     const submitBtn = form.querySelector('.form-submit');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = '...';
@@ -237,7 +237,7 @@ form.addEventListener('submit', (e) => {
         // Show success message
         form.style.display = 'none';
         formSuccess.style.display = 'block';
-
+        
         // Auto-close after 3 seconds
         setTimeout(() => {
             closeModal();
