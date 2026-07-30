@@ -12,7 +12,7 @@ html {
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f5f0e8;
+    background-color: #D1CDFF;
     color: #2c1810;
     overflow-x: hidden;
     line-height: 1.7;
@@ -23,7 +23,7 @@ body {
     width: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: #f5f0e8;
+    background: #D1CDFF;
 }
 ::-webkit-scrollbar-thumb {
     background: #8b7355;
@@ -41,7 +41,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 18px 40px;
-    background: rgba(245, 240, 232, 0.92);
+    background: rgba(209, 205, 255, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(139, 115, 85, 0.15);
@@ -187,7 +187,7 @@ body {
 /* ===== HERO ===== */
 .hero-section {
     overflow: hidden;
-    background: radial-gradient(ellipse at center, #efe9df 0%, #f5f0e8 70%);
+    background: radial-gradient(ellipse at center, #C4BFFA 0%, #D1CDFF 70%);
 }
 
 /* Floating Circles */
@@ -342,7 +342,7 @@ body {
 
 /* ===== SERVICES ===== */
 .services-section {
-    background: linear-gradient(180deg, #f5f0e8 0%, #efe9df 50%, #f5f0e8 100%);
+    background: linear-gradient(180deg, #D1CDFF 0%, #C4BFFA 50%, #D1CDFF 100%);
     padding-bottom: 100px;
 }
 
@@ -382,9 +382,11 @@ body {
     border: 1px solid rgba(139, 115, 85, 0.15);
     border-radius: 16px;
     padding: 40px 30px;
-    transition: all 0.4s ease;
+    padding-bottom: 60px;
+    transition: background 0.4s ease, border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .service-card::before {
@@ -436,9 +438,98 @@ body {
     line-height: 1.7;
 }
 
+.service-desc-full {
+    display: none;
+    font-size: 0.9rem;
+    color: #7a6b5a;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+.service-toggle,
+.service-close {
+    position: absolute;
+    background: none;
+    border: none;
+    color: #8b7355;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.service-toggle {
+    bottom: 20px;
+    right: 24px;
+    animation: chevronBounce 2s ease-in-out infinite;
+}
+
+.service-card:hover .service-toggle {
+    color: #6a5540;
+}
+
+@keyframes chevronBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+}
+
+.service-close {
+    top: 16px;
+    right: 20px;
+    display: none;
+    opacity: 0;
+}
+
+.service-card.is-open .service-toggle {
+    display: none;
+}
+
+.service-card.is-open .service-close {
+    display: flex;
+    opacity: 1;
+}
+
+.service-card.is-open .service-desc-short {
+    display: none;
+}
+
+.service-card.is-open .service-desc-full {
+    display: block;
+}
+
+.service-card.is-open {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: min(640px, 92vw);
+    max-height: 85vh;
+    overflow-y: auto;
+    z-index: 2100;
+    cursor: default;
+    background: linear-gradient(145deg, #D1CDFF, #C4BFFA);
+    border-color: rgba(139, 115, 85, 0.3);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
+}
+
+.service-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2050;
+    background: rgba(20, 15, 35, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.service-backdrop.show {
+    display: block;
+}
+
 /* ===== ABOUT ===== */
 .about-section {
-    background: #f5f0e8;
+    background: #D1CDFF;
 }
 
 .about-container,
@@ -505,12 +596,12 @@ body {
 
 /* ===== APPROACH ===== */
 .approach-section {
-    background: linear-gradient(180deg, #f5f0e8 0%, #efe9df 50%, #f5f0e8 100%);
+    background: linear-gradient(180deg, #D1CDFF 0%, #C4BFFA 50%, #D1CDFF 100%);
 }
 
 /* ===== CONTACT ===== */
 .contact-section {
-    background: #f5f0e8;
+    background: #D1CDFF;
     text-align: center;
 }
 
@@ -558,7 +649,7 @@ body {
     padding: 50px 40px 30px;
     text-align: center;
     border-top: 1px solid rgba(139, 115, 85, 0.15);
-    background: #ece5d8;
+    background: #A29CFF;
 }
 
 .footer-social {
@@ -611,7 +702,7 @@ body {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(245, 240, 232, 0.97);
+    background: rgba(209, 205, 255, 0.97);
     backdrop-filter: blur(20px);
     z-index: 998;
     flex-direction: column;
@@ -704,7 +795,7 @@ body {
 }
 
 .modal-content {
-    background: linear-gradient(145deg, #f5f0e8, #efe9df);
+    background: linear-gradient(145deg, #D1CDFF, #C4BFFA);
     border: 1px solid rgba(139, 115, 85, 0.2);
     border-radius: 20px;
     padding: 48px 40px;

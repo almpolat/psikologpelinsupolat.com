@@ -170,6 +170,67 @@ serviceCards.forEach((card, index) => {
     card.style.transitionDelay = `${index * 0.1}s`;
 });
 
+// ===== SERVICE CARDS EXPAND/COLLAPSE =====
+const serviceBackdrop = document.getElementById('service-backdrop');
+
+function openServiceCard(card) {
+    const openCard = document.querySelector('.service-card.is-open');
+    if (openCard && openCard !== card) {
+        closeServiceCard(openCard);
+    }
+    card.classList.add('is-open');
+    card.style.transition = 'none';
+    card.style.transform = 'translate(-50%, -50%) scale(0.6)';
+    card.style.opacity = '0';
+    // Force reflow so the initial state applies before transitioning
+    void card.offsetWidth;
+    requestAnimationFrame(() => {
+        card.style.transition = 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease';
+        card.style.transform = 'translate(-50%, -50%) scale(1)';
+        card.style.opacity = '1';
+    });
+    if (serviceBackdrop) serviceBackdrop.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeServiceCard(card) {
+    card.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease';
+    card.style.transform = 'translate(-50%, -50%) scale(0.6)';
+    card.style.opacity = '0';
+    if (serviceBackdrop) serviceBackdrop.classList.remove('show');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+        card.classList.remove('is-open');
+        card.style.transition = '';
+        card.style.transform = '';
+        card.style.opacity = '';
+    }, 350);
+}
+
+serviceCards.forEach(card => {
+    card.addEventListener('click', () => {
+        if (card.classList.contains('is-open')) {
+            closeServiceCard(card);
+        } else {
+            openServiceCard(card);
+        }
+    });
+});
+
+if (serviceBackdrop) {
+    serviceBackdrop.addEventListener('click', () => {
+        const openCard = document.querySelector('.service-card.is-open');
+        if (openCard) closeServiceCard(openCard);
+    });
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const openCard = document.querySelector('.service-card.is-open');
+        if (openCard) closeServiceCard(openCard);
+    }
+});
+
 // ===== APPOINTMENT MODAL =====
 const modal = document.getElementById('appointment-modal');
 const fabBtn = document.getElementById('appointment-fab');
