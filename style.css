@@ -187,7 +187,7 @@ body {
 /* ===== HERO ===== */
 .hero-section {
     overflow: hidden;
-    background: radial-gradient(ellipse at center, #C4BFFA 0%, #D1CDFF 70%);
+    background: radial-gradient(ellipse at center, #E0DCFF 0%, #D1CDFF 70%);
 }
 
 /* Floating Circles */
@@ -322,11 +322,12 @@ body {
 .hero-subtitle {
     font-family: 'Inter', sans-serif;
     font-weight: 300;
-    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+    font-size: clamp(0.55rem, 1.5vw, 1.1rem);
     letter-spacing: 0.5em;
     color: #8b7355;
     margin-top: 24px;
     opacity: 0.9;
+    white-space: nowrap;
 }
 
 @keyframes heroFadeIn {
@@ -342,7 +343,7 @@ body {
 
 /* ===== SERVICES ===== */
 .services-section {
-    background: linear-gradient(180deg, #D1CDFF 0%, #C4BFFA 50%, #D1CDFF 100%);
+    background: linear-gradient(180deg, #D1CDFF 0%, #E0DCFF 50%, #D1CDFF 100%);
     padding-bottom: 100px;
 }
 
@@ -508,7 +509,7 @@ body {
     overflow-y: auto;
     z-index: 2100;
     cursor: default;
-    background: linear-gradient(145deg, #D1CDFF, #C4BFFA);
+    background: linear-gradient(145deg, #D1CDFF, #E0DCFF);
     border-color: rgba(139, 115, 85, 0.3);
     box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
 }
@@ -596,7 +597,7 @@ body {
 
 /* ===== APPROACH ===== */
 .approach-section {
-    background: linear-gradient(180deg, #D1CDFF 0%, #C4BFFA 50%, #D1CDFF 100%);
+    background: linear-gradient(180deg, #D1CDFF 0%, #E0DCFF 50%, #D1CDFF 100%);
 }
 
 /* ===== CONTACT ===== */
@@ -795,7 +796,7 @@ body {
 }
 
 .modal-content {
-    background: linear-gradient(145deg, #D1CDFF, #C4BFFA);
+    background: linear-gradient(145deg, #D1CDFF, #E0DCFF);
     border: 1px solid rgba(139, 115, 85, 0.2);
     border-radius: 20px;
     padding: 48px 40px;
@@ -971,6 +972,11 @@ body {
         letter-spacing: 0.2em;
     }
 
+    .hero-subtitle {
+        font-size: 0.6rem;
+        letter-spacing: 0.28em;
+    }
+
     .services-grid {
         grid-template-columns: 1fr;
     }
@@ -996,8 +1002,8 @@ body {
     }
 
     .hero-subtitle {
-        font-size: 0.65rem;
-        letter-spacing: 0.3em;
+        font-size: 0.42rem;
+        letter-spacing: 0.18em;
     }
 
     .circle-image-wrapper {
