@@ -1,39 +1,47 @@
-// ===== LANGUAGE TOGGLE =====
-const currentLang = { value: 'tr' };
+// ===== LANGUAGE TOGGLE (FR default, TR secondary — no English) =====
+const LANG_STORAGE_KEY = 'ppp_lang';
+const currentLang = { value: 'fr' };
+
+function getStoredLang() {
+    try {
+        return localStorage.getItem(LANG_STORAGE_KEY);
+    } catch (e) {
+        return null;
+    }
+}
+
+function storeLang(lang) {
+    try {
+        localStorage.setItem(LANG_STORAGE_KEY, lang);
+    } catch (e) {
+        // ignore storage errors — site still works, just won't remember the choice
+    }
+}
 
 function setLanguage(lang) {
+    if (lang !== 'fr' && lang !== 'tr') lang = 'fr';
     currentLang.value = lang;
-    
+
     // Update all translatable elements (text content)
-    document.querySelectorAll('[data-tr][data-fr][data-en]').forEach(el => {
+    document.querySelectorAll('[data-fr][data-tr]').forEach(el => {
         const text = el.getAttribute(`data-${lang}`);
-        if (text) {
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                // handled separately below
-            } else {
-                el.textContent = text;
-            }
+        if (text !== null) {
+            el.textContent = text;
         }
     });
 
-    // Update input placeholders
-    document.querySelectorAll(`[data-${lang}-placeholder]`).forEach(el => {
-        el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
-    });
-
-    // Update page title and meta
+    // Update page title and meta description
     const titles = {
-        tr: 'Pelinsu Polat | Psikolog',
-        fr: 'Pelinsu Polat | Psychologue',
-        en: 'Pelinsu Polat | Psychologist'
+        fr: 'Pelinsu Polat | Psychologue Clinicienne',
+        tr: 'Pelinsu Polat | Klinik Psikolog'
     };
     const descs = {
-        tr: 'Pelinsu Polat - Klinik Psikolog. Bireysel terapi, çift terapisi, aile terapisi ve online danışmanlık hizmetleri. www.psikologpelinsupolat.com',
-        fr: 'Pelinsu Polat - Psychologue Clinicienne. Thérapie individuelle, thérapie de couple, thérapie familiale et consultation en ligne. www.psikologpelinsupolat.com',
-        en: 'Pelinsu Polat - Clinical Psychologist. Individual therapy, couples therapy, family therapy and online counseling. www.psikologpelinsupolat.com'
+        fr: "Pelinsu Polat - Psychologue clinicienne à Bordeaux. Vieillissement, bilan cognitif, soutien aux aidants, accompagnement interculturel, deuil, anxiété et dépression.",
+        tr: "Pelinsu Polat - Bordeaux'da klinik psikolog. Yaşlılık, bilişsel değerlendirme, bakım verenlere destek, kültürlerarası destek, yas, kaygı ve depresyon."
     };
     document.title = titles[lang];
-    document.querySelector('meta[name="description"]').content = descs[lang];
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.content = descs[lang];
 
     // Update active button
     document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -41,7 +49,9 @@ function setLanguage(lang) {
     });
 
     // Update html lang attribute
-    document.documentElement.lang = lang === 'en' ? 'en' : lang === 'fr' ? 'fr' : 'tr';
+    document.documentElement.lang = lang;
+
+    storeLang(lang);
 }
 
 // Language button listeners
@@ -50,6 +60,11 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
         setLanguage(btn.dataset.lang);
     });
 });
+
+// Initial language: respect a previously stored choice, otherwise default to FR.
+// If localStorage is unavailable, getStoredLang() returns null and we still get FR.
+const storedLang = getStoredLang();
+setLanguage(storedLang === 'tr' ? 'tr' : 'fr');
 
 // ===== SMOOTH SCROLL =====
 document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -81,12 +96,12 @@ const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const id = entry.target.id;
-            
+
             // Update dots
             dots.forEach(dot => {
                 dot.classList.toggle('active', dot.dataset.section === id);
             });
-            
+
             // Update nav links
             navLinks.forEach(link => {
                 link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
@@ -148,173 +163,51 @@ mobileMenuBtn.addEventListener('click', () => {
 });
 
 // ===== NAVBAR SCROLL EFFECT =====
-let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const nav = document.getElementById('main-nav');
     const scrollPos = window.scrollY;
-    
+
     if (scrollPos > 100) {
         nav.style.padding = '12px 40px';
-        nav.style.background = 'rgba(10, 10, 15, 0.95)';
+        nav.style.background = 'rgba(243, 241, 251, 0.97)';
     } else {
         nav.style.padding = '18px 40px';
-        nav.style.background = 'rgba(10, 10, 15, 0.85)';
+        nav.style.background = 'rgba(243, 241, 251, 0.92)';
     }
-    
-    lastScroll = scrollPos;
 });
 
 // ===== SERVICE CARDS STAGGER ANIMATION =====
-const serviceCards = document.querySelectorAll('.service-card');
+const serviceCards = document.querySelectorAll('.service-card-new');
 serviceCards.forEach((card, index) => {
-    card.style.transitionDelay = `${index * 0.1}s`;
+    card.style.transitionDelay = `${index * 0.08}s`;
 });
 
-// ===== SERVICE CARDS EXPAND/COLLAPSE =====
-const serviceBackdrop = document.getElementById('service-backdrop');
+// ===== SERVICE MODAL ("En savoir plus" — card 1 only) =====
+const serviceModal = document.getElementById('service-modal');
+const serviceModalOpenBtn = document.getElementById('service-modal-open');
+const serviceModalCloseBtn = document.getElementById('service-modal-close');
 
-function openServiceCard(card) {
-    const openCard = document.querySelector('.service-card.is-open');
-    if (openCard && openCard !== card) {
-        closeServiceCard(openCard);
-    }
-    card.classList.add('is-open');
-    card.style.transition = 'none';
-    card.style.transform = 'translate(-50%, -50%) scale(0.6)';
-    card.style.opacity = '0';
-    // Force reflow so the initial state applies before transitioning
-    void card.offsetWidth;
-    requestAnimationFrame(() => {
-        card.style.transition = 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease';
-        card.style.transform = 'translate(-50%, -50%) scale(1)';
-        card.style.opacity = '1';
-    });
-    if (serviceBackdrop) serviceBackdrop.classList.add('show');
+function openServiceModal() {
+    serviceModal.classList.add('show');
     document.body.style.overflow = 'hidden';
 }
 
-function closeServiceCard(card) {
-    card.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease';
-    card.style.transform = 'translate(-50%, -50%) scale(0.6)';
-    card.style.opacity = '0';
-    if (serviceBackdrop) serviceBackdrop.classList.remove('show');
+function closeServiceModal() {
+    serviceModal.classList.remove('show');
     document.body.style.overflow = '';
-    setTimeout(() => {
-        card.classList.remove('is-open');
-        card.style.transition = '';
-        card.style.transform = '';
-        card.style.opacity = '';
-    }, 350);
 }
 
-serviceCards.forEach(card => {
-    card.addEventListener('click', () => {
-        if (card.classList.contains('is-open')) {
-            closeServiceCard(card);
-        } else {
-            openServiceCard(card);
-        }
-    });
-});
+if (serviceModalOpenBtn) serviceModalOpenBtn.addEventListener('click', openServiceModal);
+if (serviceModalCloseBtn) serviceModalCloseBtn.addEventListener('click', closeServiceModal);
 
-if (serviceBackdrop) {
-    serviceBackdrop.addEventListener('click', () => {
-        const openCard = document.querySelector('.service-card.is-open');
-        if (openCard) closeServiceCard(openCard);
+if (serviceModal) {
+    serviceModal.addEventListener('click', (e) => {
+        if (e.target === serviceModal) closeServiceModal();
     });
 }
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        const openCard = document.querySelector('.service-card.is-open');
-        if (openCard) closeServiceCard(openCard);
+    if (e.key === 'Escape' && serviceModal && serviceModal.classList.contains('show')) {
+        closeServiceModal();
     }
-});
-
-// ===== APPOINTMENT MODAL =====
-const modal = document.getElementById('appointment-modal');
-const fabBtn = document.getElementById('appointment-fab');
-const contactBtn = document.getElementById('appointment-btn-contact');
-const closeBtn = document.getElementById('modal-close');
-const form = document.getElementById('appointment-form');
-const formSuccess = document.getElementById('form-success');
-
-function openModal() {
-    modal.classList.add('show');
-    document.body.style.overflow = 'hidden';
-    // Reset form if previously submitted
-    form.style.display = '';
-    formSuccess.style.display = 'none';
-    form.reset();
-}
-
-function closeModal() {
-    modal.classList.remove('show');
-    document.body.style.overflow = '';
-}
-
-fabBtn.addEventListener('click', openModal);
-contactBtn.addEventListener('click', openModal);
-closeBtn.addEventListener('click', closeModal);
-
-// Close on overlay click
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        closeModal();
-    }
-});
-
-// Close on Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('show')) {
-        closeModal();
-    }
-});
-
-// Form submission — sends to polatpelinsu@gmail.com via FormSubmit.co
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const submitBtn = form.querySelector('.form-submit');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = '...';
-    submitBtn.disabled = true;
-
-    // Build form data for FormSubmit
-    const data = new FormData();
-    data.append('name', document.getElementById('form-name').value + ' ' + document.getElementById('form-surname').value);
-    data.append('phone', document.getElementById('form-phone').value);
-    data.append('email', document.getElementById('form-email').value);
-    data.append('_subject', 'Yeni Randevu Talebi - psikologpelinsupolat.com');
-    data.append('_captcha', 'false');
-    data.append('_template', 'table');
-
-    fetch('https://formsubmit.co/ajax/polatpelinsu@gmail.com', {
-        method: 'POST',
-        body: data
-    })
-    .then(response => response.json())
-    .then(result => {
-        // Show success message
-        form.style.display = 'none';
-        formSuccess.style.display = 'block';
-        
-        // Auto-close after 3 seconds
-        setTimeout(() => {
-            closeModal();
-        }, 3000);
-    })
-    .catch(error => {
-        console.error('Form error:', error);
-        // Still show success (email might have been sent)
-        form.style.display = 'none';
-        formSuccess.style.display = 'block';
-        setTimeout(() => {
-            closeModal();
-        }, 3000);
-    })
-    .finally(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    });
 });
