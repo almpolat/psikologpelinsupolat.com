@@ -188,7 +188,7 @@ body {
 /* ===== HERO ===== */
 .hero-section {
     overflow: hidden;
-    background: radial-gradient(ellipse at center, #F8F3EC 0%, #F3F1FB 70%);
+    background: radial-gradient(ellipse at center, #F0E6DC 0%, #F3F1FB 70%);
 }
 
 /* Dandelion Illustration */
@@ -360,7 +360,7 @@ body {
 
 /* ===== SERVICES ===== */
 .services-section {
-    background: linear-gradient(180deg, #F3F1FB 0%, #F6F2EC 50%, #F3F1FB 100%);
+    background: linear-gradient(180deg, #F3F1FB 0%, #F0E6DC 50%, #F3F1FB 100%);
     padding-bottom: 100px;
     align-items: stretch;
 }
@@ -455,8 +455,8 @@ body {
 .card-5 { grid-area: c5; }
 
 .service-card-new {
-    background: rgba(139, 115, 85, 0.045);
-    border: 1px solid rgba(139, 115, 85, 0.15);
+    background: #F3ECE2;
+    border: 1px solid rgba(139, 115, 85, 0.18);
     border-radius: 18px;
     padding: 34px 32px;
     transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
@@ -471,8 +471,8 @@ body {
 }
 
 .service-card-new.card-accent {
-    background: linear-gradient(150deg, rgba(234, 223, 212, 0.65), rgba(139, 115, 85, 0.08));
-    border-color: rgba(139, 115, 85, 0.22);
+    background: linear-gradient(150deg, #EFE2D1 0%, #E8D8C3 100%);
+    border-color: rgba(139, 115, 85, 0.28);
 }
 
 .card-icon {
@@ -626,7 +626,7 @@ body {
 
 /* ===== PARCOURS ===== */
 .parcours-section {
-    background: linear-gradient(180deg, #F3F1FB 0%, #F6F2EC 50%, #F3F1FB 100%);
+    background: linear-gradient(180deg, #F3F1FB 0%, #F0E6DC 50%, #F3F1FB 100%);
     align-items: stretch;
 }
 
@@ -891,7 +891,7 @@ body {
     position: relative;
     border-radius: 18px;
     overflow: hidden;
-    background: linear-gradient(150deg, rgba(234, 223, 212, 0.75), rgba(139, 115, 85, 0.1));
+    background: linear-gradient(150deg, #F0E6DC 0%, #E6D6C2 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1090,7 +1090,7 @@ body {
 }
 
 .modal-content {
-    background: linear-gradient(145deg, #F3F1FB, #F8F3EC);
+    background: linear-gradient(145deg, #F3F1FB, #F0E6DC);
     border: 1px solid rgba(139, 115, 85, 0.2);
     border-radius: 20px;
     padding: 48px 44px;
