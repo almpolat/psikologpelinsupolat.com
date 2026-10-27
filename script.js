@@ -30,6 +30,14 @@ function setLanguage(lang) {
         }
     });
 
+    // Update translatable image alt text
+    document.querySelectorAll('[data-fr-alt][data-tr-alt]').forEach(el => {
+        const alt = el.getAttribute(`data-${lang}-alt`);
+        if (alt !== null) {
+            el.alt = alt;
+        }
+    });
+
     // Update page title and meta description
     const titles = {
         fr: 'Pelinsu Polat | Psychologue Clinicienne',
