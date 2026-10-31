@@ -864,6 +864,18 @@ body {
     line-height: 1.7;
 }
 
+.address-link {
+    color: #8b7355;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.address-link:hover,
+.address-link:focus-visible {
+    color: #6a5540;
+    text-decoration: underline;
+}
+
 .infos-gallery {
     flex: 1;
     display: flex;
@@ -956,7 +968,8 @@ body {
     letter-spacing: 1px;
 }
 
-.contact-link:hover {
+.contact-link:hover,
+.contact-link:focus-visible {
     color: #6a5540;
     transform: translateX(4px);
 }

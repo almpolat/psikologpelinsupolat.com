@@ -38,6 +38,14 @@ function setLanguage(lang) {
         }
     });
 
+    // Update translatable aria-labels
+    document.querySelectorAll('[data-fr-aria][data-tr-aria]').forEach(el => {
+        const label = el.getAttribute(`data-${lang}-aria`);
+        if (label !== null) {
+            el.setAttribute('aria-label', label);
+        }
+    });
+
     // Update page title and meta description
     const titles = {
         fr: 'Pelinsu Polat | Psychologue Clinicienne',
