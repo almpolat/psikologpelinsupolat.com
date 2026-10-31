@@ -864,6 +864,18 @@ body {
     line-height: 1.7;
 }
 
+.lang-tr-only {
+    display: none;
+}
+
+html[lang="tr"] .lang-fr-only {
+    display: none;
+}
+
+html[lang="tr"] .lang-tr-only {
+    display: inline;
+}
+
 .address-link {
     color: #8b7355;
     text-decoration: none;
@@ -1056,7 +1068,8 @@ body {
 }
 
 /* ===== APPOINTMENT FAB BUTTON ===== */
-.appointment-fab {
+.appointment-fab,
+.appointment-fab:visited {
     position: fixed;
     bottom: 36px;
     right: 36px;
@@ -1067,6 +1080,7 @@ body {
     padding: 14px 26px;
     background: linear-gradient(135deg, #8b7355 0%, #6a5540 100%);
     color: #FBF8F3;
+    text-decoration: none;
     border: none;
     border-radius: 50px;
     font-family: 'Inter', sans-serif;
